@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+ecs-pong
+
+# scons
+.sconsign.dblite
