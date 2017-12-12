@@ -30,9 +30,9 @@ Wall (Body, Position)
 
 Systems (with components and in order):
 ```text
-Collision (Body)
+Collision (Body, Position)
 Player (Position, Input)
 Bot (Position, AI)
 Balls (Position, Movement)
-Render (Body)
+Render (Body, Position)
 ```

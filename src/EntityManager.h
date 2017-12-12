@@ -8,9 +8,6 @@
 #ifndef ENTITYMANAGER_H
 #define ENTITYMANAGER_H
 
-// DEBUG
-#include <iostream>
-
 #include <vector>
 #include <functional>
 #include "components.h"
@@ -59,20 +56,11 @@ class EntityManager
       }
     }
 
-    // Dump all the entities (DEBUG)
-    void dump() const
-    {
-      for(size_t id = 0; id < std::size(masks); ++id)
-      {
-        std::cout << id << " " << masks[id] << std::endl;
-      }
-    }
-
   private:
 
     // Each entity has a mask and associated components
     std::vector<mask_t> masks;
     std::vector<components_t> components;
-};
+}; // class EntityManager
 
 #endif // ENTITYMANAGER_H

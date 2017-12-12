@@ -58,7 +58,7 @@ struct Body
   {}
 }; // struct Body
 
-// Position XY
+// Position XY (domain is [0;1])
 struct Position
 {
   static constexpr size_t ID{1};
