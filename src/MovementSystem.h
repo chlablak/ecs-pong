@@ -8,7 +8,6 @@
 #ifndef MOVEMENTSYSTEM_H
 #define MOVEMENTSYSTEM_H
 
-#include <SFML/Graphics.hpp>
 #include "System.h"
 
 class MovementSystem

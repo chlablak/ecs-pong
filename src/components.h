@@ -17,9 +17,10 @@ struct Position;
 struct Input;
 struct AI;
 struct Movement;
+struct Bound;
 
 // Components collection (in correct order)
-typedef std::tuple<Body, Position, Input, AI, Movement> components_t;
+typedef std::tuple<Body, Position, Input, AI, Movement, Bound> components_t;
 
 // Mask type and no component mask
 typedef std::bitset<std::tuple_size_v<components_t>> mask_t;
@@ -92,6 +93,19 @@ struct Movement
   // fields
   float dx;
   float dy;
+};
+
+// AABB bounds, for low-cost collision between bats and walls
+struct Bound
+{
+  static constexpr size_t ID{5};
+  static constexpr mask_t MASK{1 << ID};
+
+  // fields
+  float minx;
+  float maxx;
+  float miny;
+  float maxy;
 };
 
 #endif // COMPONENTS_H

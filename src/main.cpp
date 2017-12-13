@@ -6,11 +6,12 @@
  */
 
 #include <SFML/Graphics.hpp>
+#include "SystemManager.h"
 #include "RenderSystem.h"
 #include "InputSystem.h"
 #include "GameSystem.h"
 #include "MovementSystem.h"
-#include "SystemManager.h"
+#include "BoundSystem.h"
 
 int main()
 {
@@ -31,22 +32,25 @@ int main()
   sys.add(new InputSystem(window));
   sys.add(new GameSystem());
   sys.add(new MovementSystem());
+  sys.add(new BoundSystem());
 
   // Starting entities
   EntityManager em;
   size_t id = em.add(); // upper wall
-  em.set(id, Position{0.5f, 0.01f});
+  em.set(id, Position{0.5f, 0.015f});
   em.set(id, Body{0.99f, 0.01f});
   id = em.add(); // bottom wall
-  em.set(id, Position{0.5f, 0.99f});
+  em.set(id, Position{0.5f, 0.985f});
   em.set(id, Body{0.99f, 0.01f});
   id = em.add(); // player bat
   em.set(id, Position{0.05f, 0.5f});
   em.set(id, Body{0.01f, 0.1f});
+  em.set(id, Bound{0.05f, 0.05f, 0.08f, 0.92f});
   em.set(id, Input{});
   id = em.add(); // bot bat
   em.set(id, Position{0.95f, 0.5f});
   em.set(id, Body{0.01f, 0.1f});
+  em.set(id, Bound{0.95f, 0.95f, 0.08f, 0.92f});
   em.set(id, AI{});
 
   // Main loop

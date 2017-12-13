@@ -10,7 +10,6 @@
 
 #include <random>
 #include <ctime>
-#include <SFML/Graphics.hpp>
 #include "System.h"
 
 class GameSystem
