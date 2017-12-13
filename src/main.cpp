@@ -7,6 +7,10 @@
 
 #include <SFML/Graphics.hpp>
 #include "RenderSystem.h"
+#include "InputSystem.h"
+#include "GameSystem.h"
+#include "MovementSystem.h"
+#include "SystemManager.h"
 
 int main()
 {
@@ -14,12 +18,19 @@ int main()
   constexpr size_t WINDOW_WIDTH = 800;
   constexpr size_t WINDOW_HEIGHT = 600;
 
-  // Render window and system
+  // Render window
   sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
                           "ecs-pong",
                           sf::Style::Close | sf::Style::Titlebar);
   window.setVerticalSyncEnabled(true);
-  RenderSystem renderSystem(window);
+  window.setPosition({200, 200});
+
+  // Systems
+  SystemManager sys;
+  sys.add(new RenderSystem(window));
+  sys.add(new InputSystem(window));
+  sys.add(new GameSystem());
+  sys.add(new MovementSystem());
 
   // Starting entities
   EntityManager em;
@@ -38,12 +49,6 @@ int main()
   em.set(id, Body{0.01f, 0.1f});
   em.set(id, AI{});
 
-  // test ball
-  id = em.add();
-  em.set(id, Position{0.5f, 0.5f});
-  em.set(id, Body{0.02f});
-  em.set(id, Movement{0.f, 0.f});
-
   // Main loop
   while (window.isOpen())
   {
@@ -60,7 +65,7 @@ int main()
     window.clear(sf::Color::Black);
 
     // Systems
-    renderSystem.apply(em);
+    sys.apply(em);
 
     // Display
     window.display();

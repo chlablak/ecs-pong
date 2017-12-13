@@ -15,15 +15,11 @@ class System
 {
   public:
 
-    // Apply the system on entities
-    void apply(EntityManager& em)
-    {
-      em.apply(mask(), [this](size_t id, components_t& c) { action(id, c); });
-    }
+    virtual ~System()
+    {}
 
-    // action() applies on entity specified by mask()
-    virtual mask_t mask() const = 0;
-    virtual void action(size_t id, components_t& c) = 0;
+    // Apply the system on entities
+    virtual void apply(EntityManager& em) = 0;
 };
 
 #endif // SYSTEM_H

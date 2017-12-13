@@ -16,8 +16,6 @@ class EntityManager
 {
   public:
 
-    typedef std::function<void(size_t, components_t&)> function_t;
-
     // Return the first empty entity's ID
     size_t add()
     {
@@ -47,11 +45,19 @@ class EntityManager
     }
 
     // Apply a function on each entity matching a defined mask
-    void apply(mask_t const& mask, function_t const& f)
+    void apply(mask_t const& mask,
+               std::function<void(size_t, components_t&)> const& f)
+    {
+      apply([&](mask_t const& m) { return (mask & m) == mask; }, f);
+    }
+
+    // Apply a function on each entity validating the predicate
+    void apply(std::function<bool(mask_t const& mask)> const& p,
+               std::function<void(size_t, components_t&)> const& f)
     {
       for(size_t id = 0; id < std::size(masks); ++id)
       {
-        if((masks[id] & mask) == mask)
+        if(p(masks[id]))
           f(id, components[id]);
       }
     }

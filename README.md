@@ -11,6 +11,8 @@ $ ./ecs-pong
 ## ECS
 
 ### Models
+UPDATE NEEDED
+
 Components (with fields):
 ```text
 Body (Circle (Radius) | Rectangle (Width, Height))
@@ -31,7 +33,7 @@ Wall (Body, Position)
 Systems (with components and in order):
 ```text
 Collision (Body, Position)
-Player (Position, Input)
+Input (Position, Input)
 Bot (Position, AI)
 Balls (Position, Movement)
 Render (Body, Position)
