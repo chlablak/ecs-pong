@@ -1,7 +1,8 @@
 # ecs-pong
-Pong game to practise the [ECS](https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system) pattern.
+Pong game to practice [ECS](https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system) pattern ([other link](https://www.gamedev.net/articles/programming/general-and-gameplay-programming/understanding-component-entity-systems-r3013/)), new [C++17](https://isocpp.org/files/papers/p0636r0.html) features, [SFML](https://www.sfml-dev.org/index.php) library and some collision [physics](https://gamedevelopment.tutsplus.com/series/how-to-create-a-custom-physics-engine--gamedev-12715).
 
 ## Build and run
+Build tool required: [scons](http://scons.org/)
 ```console
 $ cd ecs-pong/
 $ scons
