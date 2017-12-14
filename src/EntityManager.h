@@ -30,24 +30,25 @@ class EntityManager
       return id;
     }
 
-    // Remove an entity, takes the entity's ID
+    // Remove an entity
     void remove(size_t id)
     {
       masks[id] = 0;
-    }
-
-    // Get a entity
-    components_t& get(size_t id)
-    {
-      return components[id];
     }
 
     // Set a component on an entity
     template<typename Component>
     void set(size_t id, Component const& component)
     {
-      std::get<Component::ID>(get(id)) = component;
+      std::get<Component::ID>(components[id]) = component;
       masks[id] |= Component::MASK;
+    }
+
+    // Unset a component on an entity
+    template<typename Component>
+    void unset(size_t id)
+    {
+      masks[id] &= ~Component::MASK;
     }
 
     // Apply a function on each entity matching a defined mask
@@ -64,7 +65,7 @@ class EntityManager
       for(size_t id = 0; id < std::size(masks); ++id)
       {
         if(p(masks[id]))
-          f(id, get(id));
+          f(id, components[id]);
       }
     }
 

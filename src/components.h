@@ -116,6 +116,7 @@ struct Contact
   // fields
   Vec2 normal;
   double penetration;
+  size_t with;
 };
 
 #endif // COMPONENTS_H

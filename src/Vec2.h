@@ -76,6 +76,11 @@ Vec2 operator-(Vec2 const& a, Vec2 const& b)
   return Vec2(a) -= b;
 }
 
+Vec2 operator+(Vec2 const& a, Vec2 const& b)
+{
+  return Vec2(a) += b;
+}
+
 Vec2 operator/(Vec2 const& a, double v)
 {
   return Vec2(a) /= v;

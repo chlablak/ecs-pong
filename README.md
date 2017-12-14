@@ -19,7 +19,7 @@ Components (with fields):
 AI ()
 Body (Circle (Radius) | Rectangle (Width, Height))
 Bound (Min (X, Y), Max (X, Y))
-Contact (Normal (X, Y), Penetration)
+Contact (Normal (X, Y), Penetration, With)
 Input ()
 Movement (Velocity (X, Y))
 Position (Coords (X, Y))

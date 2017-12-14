@@ -57,6 +57,14 @@ int main()
   em.set(id, Bound{{0.95, 0.08}, {0.95, 0.92}});
   em.set(id, AI{});
 
+  // TODO debug
+  id = em.add();
+  em.set(id, Position{{0.01, 0.5}});
+  em.set(id, Body{0.01, 0.94});
+  id = em.add();
+  em.set(id, Position{{0.99, 0.5}});
+  em.set(id, Body{0.01, 0.94});
+
   // Main loop
   while (window.isOpen())
   {
