@@ -18,11 +18,11 @@ class MovementSystem
     virtual void apply(EntityManager& em)
     {
       em.apply(Movement::MASK | Position::MASK,
-        [this](size_t id, components_t& c) {
+        [](size_t id, components_t& c) {
           Position& pos = std::get<Position::ID>(c);
           Movement const& dpos = std::get<Movement::ID>(c);
-          pos.x += dpos.dx;
-          pos.y += dpos.dy;
+          pos.coords.x += dpos.velocity.x;
+          pos.coords.y += dpos.velocity.y;
         });
     }
 };

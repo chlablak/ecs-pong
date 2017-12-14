@@ -11,6 +11,7 @@
 #include <variant>
 #include <bitset>
 #include <tuple>
+#include "Vec2.h"
 
 struct Body;
 struct Position;
@@ -18,12 +19,14 @@ struct Input;
 struct AI;
 struct Movement;
 struct Bound;
+struct Contact;
 
 // Components collection (in correct order)
-typedef std::tuple<Body, Position, Input, AI, Movement, Bound> components_t;
+using components_t =
+  std::tuple<Body, Position, Input, AI, Movement, Bound, Contact>;
 
-// Mask type and no component mask
-typedef std::bitset<std::tuple_size_v<components_t>> mask_t;
+// Mask type
+using mask_t = std::bitset<std::tuple_size_v<components_t>>;
 
 // Body (physics and graphics)
 // (Position XY is on the center of mass)
@@ -37,25 +40,25 @@ struct Body
   // Body can be a circle or a rectangle
   struct Circle
   {
-    float radius;
+    double radius;
   };
 
   struct Rectangle
   {
-    float width;
-    float height;
+    double width;
+    double height;
   };
 
   // fields
-  std::variant<Circle, Rectangle> body;
+  std::variant<Circle, Rectangle> shape;
 
   // constructors for confort
-  Body(float radius = 0.f)
-    : body{Circle{radius}}
+  Body(double radius = 0.)
+    : shape{Circle{radius}}
   {}
 
-  Body(float width, float height)
-    : body{Rectangle{width, height}}
+  Body(double width, double height)
+    : shape{Rectangle{width, height}}
   {}
 }; // struct Body
 
@@ -66,8 +69,7 @@ struct Position
   static constexpr mask_t MASK{1 << ID};
 
   // fields
-  float x;
-  float y;
+  Vec2 coords;
 };
 
 // Tag for the player bat
@@ -91,8 +93,7 @@ struct Movement
   static constexpr mask_t MASK{1 << ID};
 
   // fields
-  float dx;
-  float dy;
+  Vec2 velocity;
 };
 
 // AABB bounds, for low-cost collision between bats and walls
@@ -102,10 +103,19 @@ struct Bound
   static constexpr mask_t MASK{1 << ID};
 
   // fields
-  float minx;
-  float maxx;
-  float miny;
-  float maxy;
+  Vec2 min;
+  Vec2 max;
+};
+
+// Collision occured
+struct Contact
+{
+  static constexpr size_t ID{6};
+  static constexpr mask_t MASK{1 << ID};
+
+  // fields
+  Vec2 normal;
+  double penetration;
 };
 
 #endif // COMPONENTS_H

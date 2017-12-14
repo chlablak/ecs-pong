@@ -18,17 +18,17 @@ class BoundSystem
     virtual void apply(EntityManager& em)
     {
       em.apply(Bound::MASK | Position::MASK,
-        [this](size_t id, components_t& c) {
+        [](size_t id, components_t& c) {
           Position& p = std::get<Position::ID>(c);
           Bound const& b = std::get<Bound::ID>(c);
-          if(p.x < b.minx)
-            p.x = b.minx;
-          else if(p.x > b.maxx)
-            p.x = b.maxx;
-          if(p.y < b.miny)
-            p.y = b.miny;
-          else if(p.y > b.maxy)
-            p.y = b.maxy;
+          if(p.coords.x < b.min.x)
+            p.coords.x = b.min.x;
+          else if(p.coords.x > b.max.x)
+            p.coords.x = b.max.x;
+          if(p.coords.y < b.min.y)
+            p.coords.y = b.min.y;
+          else if(p.coords.y > b.max.y)
+            p.coords.y = b.max.y;
         });
     }
 };

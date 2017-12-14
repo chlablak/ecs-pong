@@ -36,11 +36,17 @@ class EntityManager
       masks[id] = 0;
     }
 
+    // Get a entity
+    components_t& get(size_t id)
+    {
+      return components[id];
+    }
+
     // Set a component on an entity
     template<typename Component>
     void set(size_t id, Component const& component)
     {
-      std::get<Component::ID>(components[id]) = component;
+      std::get<Component::ID>(get(id)) = component;
       masks[id] |= Component::MASK;
     }
 
@@ -58,7 +64,7 @@ class EntityManager
       for(size_t id = 0; id < std::size(masks); ++id)
       {
         if(p(masks[id]))
-          f(id, components[id]);
+          f(id, get(id));
       }
     }
 

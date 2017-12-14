@@ -12,45 +12,49 @@
 #include "GameSystem.h"
 #include "MovementSystem.h"
 #include "BoundSystem.h"
+#include "CollisionSystem.h"
+#include "ImpulseSystem.h"
 
 int main()
 {
   // Window's size
-  constexpr size_t WINDOW_WIDTH = 800;
-  constexpr size_t WINDOW_HEIGHT = 600;
+  constexpr size_t WINDOW_WIDTH = 400;
+  constexpr size_t WINDOW_HEIGHT = 300;
 
   // Render window
   sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
                           "ecs-pong",
                           sf::Style::Close | sf::Style::Titlebar);
   window.setVerticalSyncEnabled(true);
-  window.setPosition({200, 200});
+  window.setPosition({200, 600});
 
   // Systems
   SystemManager sys;
-  sys.add(new RenderSystem(window));
   sys.add(new InputSystem(window));
-  sys.add(new GameSystem());
-  sys.add(new MovementSystem());
   sys.add(new BoundSystem());
+  sys.add(new CollisionSystem());
+  sys.add(new ImpulseSystem());
+  sys.add(new MovementSystem());
+  sys.add(new GameSystem(window));
+  sys.add(new RenderSystem(window));
 
   // Starting entities
   EntityManager em;
   size_t id = em.add(); // upper wall
-  em.set(id, Position{0.5f, 0.015f});
-  em.set(id, Body{0.99f, 0.01f});
+  em.set(id, Position{{0.5, 0.015}});
+  em.set(id, Body{0.99, 0.01});
   id = em.add(); // bottom wall
-  em.set(id, Position{0.5f, 0.985f});
-  em.set(id, Body{0.99f, 0.01f});
+  em.set(id, Position{{0.5, 0.985}});
+  em.set(id, Body{0.99, 0.01});
   id = em.add(); // player bat
-  em.set(id, Position{0.05f, 0.5f});
-  em.set(id, Body{0.01f, 0.1f});
-  em.set(id, Bound{0.05f, 0.05f, 0.08f, 0.92f});
+  em.set(id, Position{{0.05, 0.5}});
+  em.set(id, Body{0.01, 0.1});
+  em.set(id, Bound{{0.05, 0.08}, {0.05, 0.92}});
   em.set(id, Input{});
   id = em.add(); // bot bat
-  em.set(id, Position{0.95f, 0.5f});
-  em.set(id, Body{0.01f, 0.1f});
-  em.set(id, Bound{0.95f, 0.95f, 0.08f, 0.92f});
+  em.set(id, Position{{0.95, 0.5}});
+  em.set(id, Body{0.01, 0.1});
+  em.set(id, Bound{{0.95, 0.08}, {0.95, 0.92}});
   em.set(id, AI{});
 
   // Main loop

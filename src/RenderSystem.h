@@ -20,6 +20,7 @@ class RenderSystem
       : window(window)
     {}
 
+    // (can be easily optimized)
     virtual void apply(EntityManager& em)
     {
       em.apply(Body::MASK | Position::MASK,
@@ -29,22 +30,23 @@ class RenderSystem
           sf::Vector2u size = window.getSize();
 
           // If we have a circle
-          if(std::holds_alternative<Body::Circle>(body.body))
+          if(std::holds_alternative<Body::Circle>(body.shape))
           {
-            Body::Circle const& circle = std::get<Body::Circle>(body.body);
-            size_t r = circle.radius * std::min(size.x, size.y) / 2.f;
+            Body::Circle const& circle = std::get<Body::Circle>(body.shape);
+            size_t r = circle.radius * std::min(size.x, size.y) / 2.;
             sf::CircleShape shape(r);
-            shape.setPosition(pos.x * size.x - r, pos.y * size.y - r);
+            shape.setPosition(pos.coords.x * size.x - r, pos.coords.y * size.y - r);
             window.draw(shape);
           }
 
           // Else if we have a rectangle
-          else if(std::holds_alternative<Body::Rectangle>(body.body))
+          else if(std::holds_alternative<Body::Rectangle>(body.shape))
           {
-            Body::Rectangle const& rect = std::get<Body::Rectangle>(body.body);
-            sf::RectangleShape shape({rect.width * size.x, rect.height * size.y});
-            shape.setPosition((pos.x - rect.width / 2.f) * size.x,
-                              (pos.y - rect.height / 2.f) * size.y);
+            Body::Rectangle const& rect = std::get<Body::Rectangle>(body.shape);
+            sf::RectangleShape shape({(float)(rect.width * size.x),
+                                      (float)(rect.height * size.y)});
+            shape.setPosition((pos.coords.x - rect.width / 2.) * size.x,
+                              (pos.coords.y - rect.height / 2.) * size.y);
             window.draw(shape);
           }
         });

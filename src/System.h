@@ -9,7 +9,6 @@
 #define SYSTEM_H
 
 #include "EntityManager.h"
-#include "components.h"
 
 class System
 {

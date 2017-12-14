@@ -27,7 +27,8 @@ class InputSystem
           Position& pos = std::get<Position::ID>(c);
           sf::Vector2i mouse = sf::Mouse::getPosition(window);
           sf::Vector2u size = window.getSize();
-          pos.y = (float)mouse.y / size.y;
+          pos.coords.x = (double)mouse.x / size.x;
+          pos.coords.y = (double)mouse.y / size.y;
         });
     }
 
