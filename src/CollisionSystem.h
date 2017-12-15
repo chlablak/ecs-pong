@@ -2,7 +2,7 @@
  * File: CollisionSystem.h
  * Info: Ball collision detection
  * Author: chlablak
- * Date: 2017-12-13
+ * Date: 2017-12-14
  */
 
 #ifndef COLLISIONSYSTEM_H

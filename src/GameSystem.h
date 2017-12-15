@@ -47,7 +47,6 @@ class GameSystem
           }
           else
           {
-            --count;
             em.remove(id);
             if(pos.coords.x < 0.)
               ++scores.second;
@@ -58,10 +57,11 @@ class GameSystem
             text.setOrigin(text.getLocalBounds().width / 2, 0);
           }
         });
-      if(count == 0)
+      size_t id = -1;
+      for(size_t i = 0; i < 2 - count; ++i)
       {
-        size_t id = em.add();
-        em.set(id, Body{0.02f});
+        id = em.add();
+        em.set(id, Body{0.015f});
         em.set(id, Position{0.5f, 0.5f});
         em.set(id, Movement{dis(gen), dis(gen)});
       }

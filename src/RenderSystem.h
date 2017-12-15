@@ -33,9 +33,10 @@ class RenderSystem
           if(std::holds_alternative<Body::Circle>(body.shape))
           {
             Body::Circle const& circle = std::get<Body::Circle>(body.shape);
-            size_t r = circle.radius * std::min(size.x, size.y) / 2.;
+            size_t r = circle.radius * std::min(size.x, size.y);
             sf::CircleShape shape(r);
-            shape.setPosition(pos.coords.x * size.x - r, pos.coords.y * size.y - r);
+            shape.setPosition(pos.coords.x * size.x - r,
+                              pos.coords.y * size.y - r);
             window.draw(shape);
           }
 

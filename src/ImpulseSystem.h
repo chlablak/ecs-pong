@@ -2,13 +2,12 @@
  * File: ImpulseSystem.h
  * Info: Ball collision resolution
  * Author: chlablak
- * Date: 2017-12-13
+ * Date: 2017-12-14
  */
 
 #ifndef IMPULSESYSTEM_H
 #define IMPULSESYSTEM_H
 
-#include <iostream> // TODO debug
 #include "System.h"
 #include "Vec2.h"
 
@@ -17,6 +16,7 @@ class ImpulseSystem
 {
   public:
 
+    // Source: https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector
     virtual void apply(EntityManager& em)
     {
       em.apply(Contact::MASK | Movement::MASK | Position::MASK,
@@ -24,9 +24,8 @@ class ImpulseSystem
           Contact& contact = std::get<Contact::ID>(c);
           Movement& move = std::get<Movement::ID>(c);
           Position& pos = std::get<Position::ID>(c);
-          std::cout << "CONTACT(" << id << ") -> " << contact.normal << "; "
-                    << contact.penetration << "; " << contact.with << std::endl;
-          // TODO
+          pos.coords += contact.penetration * contact.normal;
+          move.velocity -= 2. * Vec2::dot_product(move.velocity, contact.normal) * contact.normal;
           em.unset<Contact>(id);
         });
     }
