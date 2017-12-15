@@ -11,6 +11,7 @@
 #include <variant>
 #include <bitset>
 #include <tuple>
+#include <SFML/Graphics.hpp>
 #include "Vec2.h"
 
 struct Body;
@@ -20,10 +21,12 @@ struct AI;
 struct Movement;
 struct Bound;
 struct Contact;
+struct Fade;
+struct Brick;
 
 // Components collection (in correct order)
-using components_t =
-  std::tuple<Body, Position, Input, AI, Movement, Bound, Contact>;
+using components_t = std::tuple<
+  Body, Position, Input, AI, Movement, Bound, Contact, Fade, Brick>;
 
 // Mask type
 using mask_t = std::bitset<std::tuple_size_v<components_t>>;
@@ -51,14 +54,17 @@ struct Body
 
   // fields
   std::variant<Circle, Rectangle> shape;
+  sf::Color color;
 
   // constructors for confort
-  Body(double radius = 0.)
+  Body(double radius = 0., sf::Color const& color = sf::Color::White)
     : shape{Circle{radius}}
+    , color(color)
   {}
 
-  Body(double width, double height)
+  Body(double width, double height, sf::Color const& color = sf::Color::White)
     : shape{Rectangle{width, height}}
+    , color(color)
   {}
 }; // struct Body
 
@@ -115,8 +121,35 @@ struct Contact
 
   // fields
   Vec2 normal;
+  Vec2 true_normal;
   double penetration;
   size_t with;
+};
+
+// Fading entity (enable/disable)
+struct Fade
+{
+  static constexpr size_t ID{7};
+  static constexpr mask_t MASK{1 << ID};
+
+  // fields
+  int diff;
+  int alpha;
+
+  Fade(int diff = 0, int alpha = 0)
+    : diff(diff)
+    , alpha(alpha)
+  {}
+};
+
+// Brick wall (destoyable)
+struct Brick
+{
+  static constexpr size_t ID{8};
+  static constexpr mask_t MASK{1 << ID};
+
+  // fields
+  size_t with; // 0 = player, 1 = AI
 };
 
 #endif // COMPONENTS_H

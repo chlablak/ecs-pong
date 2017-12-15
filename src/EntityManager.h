@@ -26,7 +26,7 @@ class EntityManager
           return id;
       }
       masks.push_back(0);
-      components.push_back(components_t{});
+      components.push_back(components_t());
       return id;
     }
 
@@ -49,6 +49,13 @@ class EntityManager
     void unset(size_t id)
     {
       masks[id] &= ~Component::MASK;
+    }
+
+    // Check if an entity has a component
+    template<typename Component>
+    bool has(size_t id) const
+    {
+      return (masks[id] & Component::MASK).any();
     }
 
     // Apply a function on each entity matching a defined mask

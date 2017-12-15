@@ -1,6 +1,6 @@
 /**
  * File: BoundSystem.h
- * Info: Player input system
+ * Info: Position bound system
  * Author: chlablak
  * Date: 2017-12-13
  */
@@ -17,6 +17,7 @@ class BoundSystem
 
     virtual void apply(EntityManager& em)
     {
+      // Bound position
       em.apply(Bound::MASK | Position::MASK,
         [](size_t id, components_t& c) {
           Position& p = std::get<Position::ID>(c);

@@ -18,6 +18,7 @@ class AISystem
     virtual void apply(EntityManager& em)
     {
       danger = {0., 0.5};
+      speed = 0.005;
 
       // Find the prior danger
       em.apply(Movement::MASK | Position::MASK,
@@ -35,14 +36,27 @@ class AISystem
       em.apply(AI::MASK | Position::MASK,
         [this](size_t id, components_t& c) {
           Position& pos = std::get<Position::ID>(c);
-          if(std::abs(pos.coords.y - danger.y) > 0.02)
-            pos.coords.y += pos.coords.y < danger.y ? 0.01 : -0.01;
+          // Is the danger far enought?
+          if(std::abs(pos.coords.y - danger.y) > 0.01)
+          {
+            // Move faster if the danger is far away
+            if(std::abs(pos.coords.y - danger.y) > 0.1)
+            {
+              speed *= 2.;
+              if(std::abs(pos.coords.y - danger.y) > 0.3)
+                speed *= 2.;
+            }
+
+            // Move bat
+            pos.coords.y += pos.coords.y < danger.y ? speed : -speed;
+          }
         });
     }
 
   private:
 
     Vec2 danger;
+    double speed;
 };
 
 #endif // AISYSTEM_H

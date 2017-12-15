@@ -22,6 +22,7 @@ class InputSystem
 
     virtual void apply(EntityManager& em)
     {
+      // Player bat moves with the mouse
       em.apply(Input::MASK | Position::MASK,
         [this](size_t id, components_t& c) {
           Position& pos = std::get<Position::ID>(c);

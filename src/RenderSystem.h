@@ -37,6 +37,7 @@ class RenderSystem
             sf::CircleShape shape(r);
             shape.setPosition(pos.coords.x * size.x - r,
                               pos.coords.y * size.y - r);
+            shape.setFillColor(body.color);
             window.draw(shape);
           }
 
@@ -48,6 +49,7 @@ class RenderSystem
                                       (float)(rect.height * size.y)});
             shape.setPosition((pos.coords.x - rect.width / 2.) * size.x,
                               (pos.coords.y - rect.height / 2.) * size.y);
+            shape.setFillColor(body.color);
             window.draw(shape);
           }
         });
