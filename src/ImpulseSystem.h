@@ -26,6 +26,7 @@ class ImpulseSystem
           Position& pos = std::get<Position::ID>(c);
           pos.coords += contact.penetration * contact.normal;
           move.velocity -= 2. * Vec2::dot_product(move.velocity, contact.normal) * contact.normal;
+          move.velocity *= 1.002;
           em.unset<Contact>(id);
         });
     }

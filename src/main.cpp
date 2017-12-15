@@ -50,13 +50,13 @@ int main()
   em.set(id, Body{0.99, 0.01});
   id = em.add(); // player bat
   em.set(id, Position{{0.05, 0.5}});
-  em.set(id, Body{0.01, 0.1});
-  em.set(id, Bound{{0.05, 0.08}, {0.05, 0.92}});
+  em.set(id, Body{0.015, 0.15});
+  em.set(id, Bound{{0.05, 0.105}, {0.05, 0.895}});
   em.set(id, Input{});
   id = em.add(); // bot bat
   em.set(id, Position{{0.95, 0.5}});
-  em.set(id, Body{0.01, 0.1});
-  em.set(id, Bound{{0.95, 0.08}, {0.95, 0.92}});
+  em.set(id, Body{0.015, 0.15});
+  em.set(id, Bound{{0.95, 0.105}, {0.95, 0.895}});
   em.set(id, AI{});
 
   // Main loop
